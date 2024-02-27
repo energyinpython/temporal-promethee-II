@@ -234,16 +234,12 @@ def main():
     df_varia_fin[met.upper()] = list(var)
     df_varia_fin[met.upper() + ' dir'] = list(dir_class)
 
-    df_results = pd.DataFrame()
-    df_results['Ai'] = list(df.columns)
+    # save results in csv
+    df_results = pd.DataFrame(index = df.columns)
     df_results['Variability'] = list(var)
     
     # list of directions
-    df_results['dir list'] = dir_list
-    
-    df_results.to_csv('results/scores_p.csv')
-    df_varia_fin = df_varia_fin.rename_axis('Country')
-    df_varia_fin.to_csv('results/FINAL_P.csv')
+    df_results['Direction'] = dir_list
 
     # final calculation
     # data with alternatives' rankings' variability values calculated with Gini coeff and directions
@@ -269,11 +265,9 @@ def main():
     summary_corrs = summary_corrs.rename_axis('Country')
     summary_corrs.to_csv('./results/summary.csv')
 
-    results_final = pd.DataFrame(index = country_names)
-    results_final['Temporal PROMETHEE II pref'] = final_S
-    results_final['Temporal PROMETHEE II rank'] = rank
-    results_final = results_final.rename_axis('Country')
-    results_final.to_csv('./results/results_final.csv')
+    df_results['Temporal PROMETHEE II pref'] = final_S
+    df_results['Temporal PROMETHEE II rank'] = rank
+    df_results.to_csv('./results/results_final.csv')
     
 
     # ===================================================================
